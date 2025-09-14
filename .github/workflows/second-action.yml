@@ -30,7 +30,9 @@ jobs:
           cache: maven
 
       - name: Build & Run Tests
-        run: mvn -B -ntp clean install
+        run: |
+            cd workflows
+            mvn -B -ntp clean install
         # clean = wipe target
         # install = build + test + install into local repo
 
