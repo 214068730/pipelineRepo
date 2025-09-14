@@ -1,12 +1,20 @@
+#give your workflow a name
 name: First Workflow
+
+#Define when your workflow must be executed/triggered
+#workflow_dispatch is for manual triggers
 on: workflow_dispatch
+
+
+#define jobs
 jobs: 
+  #can be anyname its basically the name of your j=b
   first-job: 
+    #what env must your job run on linux, windows etc
     runs-on: ubuntu-latest 
     steps:
       - name: Print greeting
-      - run: echo "Hello World"
+        run: echo "Hello World"
       - name: Print goodbye
-      - run: echo "Done -bye"
+        run: echo "Done -bye"
     
-
