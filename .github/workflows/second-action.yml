@@ -27,7 +27,7 @@ jobs:
             java-version: '21'
             cache: maven
      - name: Build & Run Tests
-        run: mvn -B -ntp clean install
+       run: mvn -B -ntp clean install
         # clean = wipe target
         # install = build + test + install into local repo
 
