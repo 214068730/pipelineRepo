@@ -73,7 +73,8 @@ jobs:
       - name: Build & Push Docker image
         uses: docker/build-push-action@v5
         with:
-          context: .   # repo root (where Dockerfile is)
+          context: .   # repo root
+          file: workflows/Dockerfile     # ← tell it where the Dockerfile is
           push: true
           tags: thebestever535/pipelinetest:latest
 
