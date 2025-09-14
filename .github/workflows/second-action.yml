@@ -19,6 +19,7 @@ jobs:
     steps:
       - name: get code from repo
         uses: actions/checkout@v4 #remember you running your test on server ubuntu one so you have to get the code on the server  
+
       - name: List files in project
         run: ls -la
 
@@ -31,8 +32,8 @@ jobs:
 
       - name: Build & Run Tests
         run: |
-            cd workflows
-            mvn -B -ntp clean install
+          cd workflows
+          mvn -B -ntp clean install
         # clean = wipe target
         # install = build + test + install into local repo
 
@@ -44,9 +45,9 @@ jobs:
 
       - name: Complete 
         run: echo "Done -bye"
-    
 
-    build-container:
+  # second job that builds & pushes the container
+  build-container:
     runs-on: ubuntu-latest
     needs: second-job  # wait for the jar
     steps:
