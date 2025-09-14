@@ -16,7 +16,7 @@ jobs:
   #can be anyname its basically the name of your j=b
   second-job: 
     #what env must your job run on linux, windows etc
-    runs-on: ubuntu-latest 
+    runs-on: ubuntu-latest
     steps:
       - name: get code from repo
         uses: actions/checkout@v4 #remember you running your test on server ubuntu one so you have to get the code on the server  
