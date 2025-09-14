@@ -19,6 +19,8 @@ jobs:
     steps:
       - name: get code from repo
         uses: actions/checkout@v4 #remember you running your test on server ubuntu one so you have to get the code on the server  
+      - name: List files in project
+        run: ls -la
 
       - name: Set up JDK 21 (Amazon Corretto)
         uses: actions/setup-java@v4
