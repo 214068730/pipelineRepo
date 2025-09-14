@@ -1,0 +1,41 @@
+#give your workflow a name
+name: Second Workflow
+
+#Define when your workflow must be executed/triggered
+#kick off build whenever a push happens
+#on:
+#    push:
+#        branches:
+#            - 'main'
+#            - 'releases/**'
+on: push
+
+
+#define jobs
+jobs: 
+  #can be anyname its basically the name of your j=b
+  second-job: 
+    #what env must your job run on linux, windows etc
+    runs-on: ubuntu-latest 
+    steps:
+      - name: get code from repo
+        uses: actions/checkout@v4 #remember you running your test on server ubuntu one so you have to get the code on the server  
+      - name: Set up JDK 21 (Amazon Corretto)
+        uses: actions/setup-java@v4
+          with:
+            distribution: corretto
+            java-version: '21'
+            cache: maven
+     - name: Build & Run Tests
+        run: mvn -B -ntp clean install
+        # clean = wipe target
+        # install = build + test + install into local repo
+
+      - name: Upload JAR artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: spring-boot-jar
+          path: target/*.jar
+    - name: Complete 
+      un: echo "Done -bye"
+        
