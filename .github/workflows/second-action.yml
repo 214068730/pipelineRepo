@@ -97,7 +97,7 @@ jobs:
       - name: Update pipeline.yaml with new SHA
         run: |
           cd gitops/pipeline_app
-          sed -i "s#thebestever535/pipelinetest:.*#thebestever535/pipelinetest:${GITHUB_SHA}#g" pipeline.yaml
+          sed -i "s#thebestever535/pipelinetest:.*#thebestever535/pipelinetest:${GITHUB_SHA}#g" pipleline.yaml
 
       # 6. Commit and push change back to GitOps repo
       - name: Commit & Push changes
