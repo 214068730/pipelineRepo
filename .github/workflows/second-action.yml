@@ -84,7 +84,7 @@ jobs:
         with:
           repository: 214068730/pipeline_gitops
           ref: main
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.GITOPS_PAT }}   # PAT with repo write access
           path: gitops
 
       - name: Debug GitOps repo contents
