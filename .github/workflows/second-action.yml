@@ -4,7 +4,7 @@ name: Second Workflow
 #Define when your workflow must be executed/triggered
 on: push
 
-# 👇 add this so the built-in GitHub token can commit/push
+# allow commits with GITHUB_TOKEN; PAT still needed for cross-repo push
 permissions:
   contents: write
 
@@ -78,34 +78,45 @@ jobs:
             thebestever535/pipelinetest:${{ env.SHA7 }}
             thebestever535/pipelinetest:latest
 
-      # 4. Checkout GitOps repo
+  # 🔹 third job: separate job to update GitOps repo (deploy to dev)
+  deploy-to-dev:
+    runs-on: ubuntu-latest
+    needs: build-container
+    steps:
+      # recompute short SHA in this job's environment (jobs don't share env)
+      - name: Set short SHA
+        run: echo "SHA7=${GITHUB_SHA::7}" >> $GITHUB_ENV
+
+      # checkout the GitOps repo into ./gitops
       - name: Checkout GitOps repo
         uses: actions/checkout@v4
         with:
           repository: 214068730/pipeline_gitops
           ref: main
-          token: ${{ secrets.GITOPS_PAT }}   # PAT with repo write access
+          # PAT with write access to 214068730/pipeline_gitops
+          token: ${{ secrets.GITOPS_PAT }}
           path: gitops
 
-      - name: Debug GitOps repo contents
+      # optional: list files for sanity
+      - name: List GitOps repo files
         run: |
           cd gitops
-          pwd
           ls -R
 
-      # 5. Update pipeline.yaml with new SHA
-      - name: Update pipeline.yaml with new SHA
+      # update the image tag inside pipeline_app/pipleline.yaml
+      - name: Update pipleline.yaml with new short SHA
         run: |
           cd gitops/pipeline_app
           sed -i "s#thebestever535/pipelinetest:.*#thebestever535/pipelinetest:${SHA7}#g" pipleline.yaml
+          echo "Updated image tag to ${SHA7}"
 
-      # 6. Commit and push change back to GitOps repo
+      # commit & push the change back to the GitOps repo
       - name: Commit & Push changes
         run: |
           cd gitops
           git config user.name "github-actions"
           git config user.email "actions@github.com"
           git add pipeline_app/pipleline.yaml
-          git commit -m "Update image tag to $GITHUB_SHA"
+          git commit -m "Update image tag to ${SHA7}"
           git push
 
