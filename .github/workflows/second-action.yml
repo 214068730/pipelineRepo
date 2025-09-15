@@ -80,5 +80,28 @@ jobs:
           file: workflows/Dockerfile     # ← tell it where the Dockerfile is
           push: true
           tags: thebestever535/pipelinetest:${{ env.SHA7 }}
+    # 4. Checkout GitOps repo
+      - name: Checkout GitOps repo
+        uses: actions/checkout@v4
+        with:
+          repository: 214068730/pipeline_gitops
+          token: ${{ secrets.GITHUB_TOKEN }}
+          path: gitops
+
+      # 5. Update deployment.yaml with new SHA
+     - name: Update pipeline.yaml with new SHA
+       run: |
+        cd gitops/pipeline_app
+        sed -i "s#thebestever535/pipelinetest:.*#thebestever535/pipelinetest:${GITHUB_SHA}#g" pipeline.yaml
+
+      # 6. Commit and push change back to GitOps repo
+      - name: Commit & Push changes
+        run: |
+          cd gitops
+          git config user.name "github-actions"
+          git config user.email "actions@github.com"
+          git add dev/myapp/k8s/deployment.yaml
+          git commit -m "Update myapp image to $GITHUB_SHA"
+          git push
 
 
