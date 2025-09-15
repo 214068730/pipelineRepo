@@ -105,7 +105,7 @@ jobs:
           cd gitops
           git config user.name "github-actions"
           git config user.email "actions@github.com"
-          git add pipeline_app/pipeline.yaml
+          git add pipeline_app/pipleline.yaml
           git commit -m "Update image tag to $GITHUB_SHA"
           git push
 
