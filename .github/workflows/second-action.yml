@@ -76,5 +76,6 @@ jobs:
           context: .   # repo root
           file: workflows/Dockerfile     # ← tell it where the Dockerfile is
           push: true
-          tags: thebestever535/pipelinetest:latest
+          tags: thebestever535/pipelinetest:${{ env.SHA7 }}
+
 
