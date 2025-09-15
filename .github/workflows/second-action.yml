@@ -87,6 +87,12 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           path: gitops
 
+      - name: Debug GitOps repo contents
+        run: |
+          cd gitops
+          pwd
+          ls -R
+
       # 5. Update pipeline.yaml with new SHA
       - name: Update pipeline.yaml with new SHA
         run: |
