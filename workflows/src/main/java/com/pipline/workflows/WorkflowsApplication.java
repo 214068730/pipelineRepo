@@ -8,7 +8,7 @@ public class WorkflowsApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(WorkflowsApplication.class, args);
-		System.out.println("Testing3");
+		System.out.println("Testing4");
 	}
 
 }
