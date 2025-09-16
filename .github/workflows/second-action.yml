@@ -82,7 +82,7 @@ jobs:
   deploy-to-dev:
     runs-on: ubuntu-latest
     needs: build-container
-    environment: dev
+    #environment: dev
     steps:
       # recompute short SHA in this job's environment (jobs don't share env)
       - name: Set short SHA
